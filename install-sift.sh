@@ -40,7 +40,7 @@ including any modified or derivative versions."
 echo; echo
 
 while true; do
-    read -p "Do you agree to the above license terms? " yn
+    read -p "Do you agree to the above license terms? [y/N]: " yn
     case $yn in
         [Yy]* ) get_sift; break;;
         [Nn]* ) exit 1;;
@@ -49,12 +49,3 @@ while true; do
 done
 
 exit 0
-
-
-
-
-
-exit 0
-
-
-
