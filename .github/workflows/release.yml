@@ -3,12 +3,14 @@ name: CI
 on:
   push:
     branches: [ master ]
+
   pull_request:
     branches: [ master ]
 
 jobs:
   build:
     runs-on: ubuntu-18.04
+    if: "contains(toJSON(github.event.commits.*.message), '[build]')"
 
     steps:
     - uses: actions/checkout@v2
