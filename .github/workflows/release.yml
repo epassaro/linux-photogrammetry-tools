@@ -7,9 +7,8 @@ on:
   pull_request:
     branches: [master]
 
-  on:
-    release:
-      types: [published]
+  release:
+    types: [published]
 
 jobs:
   build:
