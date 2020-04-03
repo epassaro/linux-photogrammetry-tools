@@ -426,12 +426,19 @@ def sift_image(image, verbose=False):
     with open(image, 'rb') as fp_img:
         image = Image.open(fp_img)
         image.convert('L').save(pgm_filename)
+        
+    # Add lib folder to LD_LIBRARY_PATH
+    env = dict(os.environ)
+    if env.has_key('LD_LIBRARY_PATH'):
+        env['LD_LIBRARY_PATH'] = env['LD_LIBRARY_PATH'] + ':' + LIB_PATH
+    else:
+        env['LD_LIBRARY_PATH'] = LIB_PATH
 
     # Extract SIFT data
     if verbose:
-        subprocess.call([BIN_SIFT, "-v", "-o", key_filename, pgm_filename])
+        subprocess.call([BIN_SIFT, "-v", "-o", key_filename, pgm_filename], env=env)
     else:
-        subprocess.call([BIN_SIFT, "-o", key_filename, pgm_filename])
+        subprocess.call([BIN_SIFT, "-o", key_filename, pgm_filename], env=env)
 
     # Remove pgm file
     os.remove(pgm_filename)
