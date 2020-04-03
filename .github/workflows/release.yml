@@ -64,8 +64,8 @@ jobs:
 
       - name: prepare files
         run: |
-          cp vlfeat/glnxa64/sift bundler_sfm/bin
-          cp vlfeat/glnxa64/libvl.so bundler_sfm/bin
+          cp vlfeat/bin/glnxa64/sift bundler_sfm/bin
+          cp vlfeat/bin/glnxa64/libvl.so bundler_sfm/bin
           cp CMVS-PMVS/program/build/main/cmvs bundler_sfm/bin
           cp CMVS-PMVS/program/build/main/pmvs2 bundler_sfm/bin
           cp CMVS-PMVS/program/build/main/genOption bundler_sfm/bin
