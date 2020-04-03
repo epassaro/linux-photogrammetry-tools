@@ -3,7 +3,7 @@
 
 A set of photogrammetry tools compiled for Ubuntu 18.04 and ready to use:
 
-- [VLFeat SIFT](https://github.com/vlfeat/vlfeat)
+- SIFT by [vlfeat.org](https://www.vlfeat.org/)
 - [Bundler](https://github.com/snavely/bundler_sfm) (compiled with Ceres Solver) by Noah Snavely
 - [CMVS \& PMVS2](https://github.com/pmoulon/CMVS-PMVS) by Yasutaka Furukawa
 
