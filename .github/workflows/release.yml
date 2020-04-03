@@ -19,10 +19,19 @@ jobs:
         run: |
           sudo apt install build-essential git gfortran liblapack-dev libgsl-dev minpack-dev f2c jhead zlib1g-dev libjpeg62-dev libceres-dev cmake
 
+      - name: clone vlfeat
+        run: git clone https://github.com/snavely/bundler_sfm.git
+
+      - name: compile vlfeat
+        run: |
+          cd vlfeat
+          sed -i 's/  if(! (max_value >= 65536)) {/  if(! max_value >= 65536) {/' vl/pgm.c
+          make
+
       - name: clone bundler
         run: git clone https://github.com/snavely/bundler_sfm.git
 
-      - name: get sift
+      - name: get lowe-sift
         run: |
           wget http://www.cs.ubc.ca/~lowe/keypoints/siftDemoV4.zip
           unzip siftDemoV4.zip
@@ -39,6 +48,9 @@ jobs:
           cd bundler_sfm/bin
           rm sift
           rm zlib1.dll
+          rm ToSift.sh
+          rm ToSiftList.sh
+          rm extract_focal.pl
 
       - name: clone cmvs-pmvs
         run: git clone https://github.com/pmoulon/CMVS-PMVS.git
@@ -52,47 +64,36 @@ jobs:
 
       - name: prepare files
         run: |
+          rm bundler_sfm/bin/ToSift.sh
+          rm bundler_sfm/bin/ToSiftList.sh
+          rm bundler_sfm/bin/extract_focal.pl
+          cp vlfeat/glnxa64/sift bundler_sfm/bin
+          cp vlfeat/glnxa64/libvl.so bundler_sfm/bin
           cp CMVS-PMVS/program/build/main/cmvs bundler_sfm/bin
           cp CMVS-PMVS/program/build/main/pmvs2 bundler_sfm/bin
           cp CMVS-PMVS/program/build/main/genOption bundler_sfm/bin
-          chmod -R u+x bundler_sfm/bin
                   
           mkdir lpt-ubuntu-18.04
-          mkdir bundler-ubuntu-18.04
-          mkdir cmvs-pmvs-ubuntu-18.04
-
           cp -r bundler_sfm/bin lpt-ubuntu-18.04
-          cp -r bundler_sfm/utils lpt-ubuntu-18.04
-          chmod u+x install-sift.sh
-          cp install-sift.sh lpt-ubuntu-18.04
           cp Makefile lpt-ubuntu-18.04
 
           cd lpt-ubuntu-18.04
           mkdir lib
+          mkdir utils
           mkdir -p examples/ET
           mkdir -p examples/kermit
           mv bin/libANN_char.so lib
+          mv bin/libvl.so lib
 
           cd ..
+          cp bundler.py utils
+          chmod -R u+x lpt-ubuntu-18.04/bin
           cp bundler_sfm/examples/ET/*.jpg lpt-ubuntu-18.04/examples/ET
           cp bundler_sfm/examples/kermit/*.jpg lpt-ubuntu-18.04/examples/kermit
-
-          cp lpt-ubuntu-18.04/bin/cmvs cmvs-pmvs-ubuntu-18.04
-          cp lpt-ubuntu-18.04/bin/pmvs2 cmvs-pmvs-ubuntu-18.04
-          cp lpt-ubuntu-18.04/bin/genOption cmvs-pmvs-ubuntu-18.04
-
-          cp -r lpt-ubuntu-18.04/bin bundler-ubuntu-18.04
-          cp -r lpt-ubuntu-18.04/lib bundler-ubuntu-18.04
-          cp -r lpt-ubuntu-18.04/utils bundler-ubuntu-18.04
-          rm bundler-ubuntu-18.04/bin/cmvs
-          rm bundler-ubuntu-18.04/bin/pmvs2
-          rm bundler-ubuntu-18.04/bin/genOption
 
       - name: tar
         run: |
           tar -zcvf lpt-ubuntu-18.04.tar.gz lpt-ubuntu-18.04
-          tar -zcvf bundler-ubuntu-18.04.tar.gz bundler-ubuntu-18.04
-          tar -zcvf cmvs-pmvs-ubuntu-18.04.tar.gz cmvs-pmvs-ubuntu-18.04
 
       - name: release
         uses: AButler/upload-release-assets@v2.0
