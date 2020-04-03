@@ -8,7 +8,7 @@ A set of photogrammetry tools compiled for Ubuntu 18.04 and ready to use:
 
 
 ## Download
-Get latest build from [here](https://github.com/epassaro/linux-photogrammetry-tools/releases/download/stable/lpt-ubuntu-18.04.tar.gz).
+Get latest build from [here](https://github.com/epassaro/linux-photogrammetry-tools/releases/download/stable/lpt-ubuntu-18.04.tar.gz) and extract it.
 
 
 ## Dependencies
