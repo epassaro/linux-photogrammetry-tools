@@ -5,6 +5,7 @@ A set of photogrammetry tools compiled for Ubuntu 18.04 and ready to use:
 
 - SIFT by [vlfeat.org](https://www.vlfeat.org/)
 - [Bundler](https://github.com/snavely/bundler_sfm) (compiled with Ceres Solver) by Noah Snavely
+- A patched version of `bundler.py` compatible with VLFeat SIFT (based on [Python Photogrammetry Tools](https://github.com/steve-vincent/photogrammetry))
 - [CMVS \& PMVS2](https://github.com/pmoulon/CMVS-PMVS) by Yasutaka Furukawa
 
 
@@ -15,7 +16,7 @@ Get latest build from [here](https://github.com/epassaro/linux-photogrammetry-to
 ## Dependencies
 Probably you have most of these dependencies already installed on your system:
 
-`build-essential` `libc6-i386` `libjpeg62` `liblapack3` `libceres1` `python` `python-pil`
+`build-essential` `libc6-i386` `libjpeg62` `liblapack3` `libceres1` `jhead` `python` `python-pil`
 
 
 ## Run example
