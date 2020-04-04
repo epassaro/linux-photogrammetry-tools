@@ -32,13 +32,13 @@ bundle2pmvs:
 	
 cmvs:
 	@echo -n " Running CMVS..."
-	@cd bin; ./cmvs ../work_dir/pmvs/ >> $(LOGFILE) 2>&1
-	@cd bin; ./genOption ../work_dir/pmvs/ >> $(LOGFILE) 2>&1
+	@cd work_dir; ../bin/cmvs ./pmvs/ >> $(LOGFILE) 2>&1
+	@cd work_dir; ../bin/genOption ./pmvs/ >> $(LOGFILE) 2>&1
 	@echo " OK"
 
 pmvs:
 	@echo -n " Running PMVS..."
-	@cd bin; ./pmvs2 ../work_dir/pmvs/ option-0000 >> $(LOGFILE) 2>&1
+	@cd work_dir; ../bin/pmvs2 ./pmvs/ option-0000 >> $(LOGFILE) 2>&1
 	@echo " OK"
 	@echo; echo "Finished."
 
