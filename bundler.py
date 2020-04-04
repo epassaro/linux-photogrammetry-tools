@@ -553,9 +553,10 @@ def bundler(image_list=None, options_file=None, shell=False, *args, **kwargs):
         'variable_focal_length'  : lambda k,v: kwargs_bool(v, ['--'+k]),
         'use_focal_estimate'     : lambda k,v: kwargs_bool(v, ['--'+k]),
         'constrain_focal'        : lambda k,v: kwargs_bool(v, ['--'+k]),
-        'constrain_focal_weight' : lambda k,v: ['--'+k,str(v)],
+        'constrain_focal_weight' : lambda k,v: ['--'+k, str(v)],
         'estimate_distortion'    : lambda k,v: kwargs_bool(v, ['--'+k]),
         'run_bundle'             : lambda k,v: kwargs_bool(v, ['--'+k]),
+        'use_ceres'              : lambda k,v: kwargs_bool(v, ['--'+k]),
     }
 
     str_args = [a for a in args if type(a) == str]
@@ -638,7 +639,8 @@ def run_bundler(images=[], verbose=False, parallel=True):
             constrain_focal=True,
             constrain_focal_weight=0.0001,
             estimate_distortion=True,
-            run_bundle=True)
+            run_bundle=True,
+            use_ceres=True)
 
     if verbose: print "[- Done -]"
 
