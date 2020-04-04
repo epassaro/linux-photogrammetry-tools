@@ -1,7 +1,6 @@
 IMG_DIR = examples/kermit
 OUTPUT = work_dir
 LOGFILE = log.txt
-CLUSTER = 10
 
 all:  clean images mesh
 
