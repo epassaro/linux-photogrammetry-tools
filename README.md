@@ -5,7 +5,7 @@ A set of photogrammetry tools compiled for Ubuntu 18.04 and ready to use:
 
 - SIFT by [vlfeat.org](https://www.vlfeat.org/)
 - [Bundler](https://github.com/snavely/bundler_sfm) (compiled with Ceres Solver) by Noah Snavely
-- A patched version of `bundler.py` compatible with VLFeat SIFT (based on [Python Photogrammetry Toolbox](https://github.com/steve-vincent/photogrammetry))
+- A patched version of `bundler.py` compatible with VLFeat SIFT (based on [Python Photogrammetry Toolbox](https://github.com/steve-vincent/photogrammetry)) and more tweaks
 - [CMVS \& PMVS2](https://github.com/pmoulon/CMVS-PMVS) by Yasutaka Furukawa
 
 
@@ -27,6 +27,11 @@ Probably you have most of these dependencies already installed on your system:
 Open with [Meshlab](http://www.meshlab.net/) the `.ply` file located at `work_dir/pmvs/models/`. 
 
 Check the log file inside `work_dir` directory in case of error.
+
+
+## Add a new camera
+CCD widths are listed in `cfg/ccd_widths.yml`.
+
 
 ## License
 
