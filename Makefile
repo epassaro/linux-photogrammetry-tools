@@ -7,7 +7,7 @@ all:  clean images mesh
 
 mesh: bundler bundle2pmvs cmvs pmvs
 
-images:	
+images:
 	@echo; echo -n " Copying files..."
 	@mkdir -p work_dir
 	@cp $(IMG_DIR)/*.jpg work_dir
