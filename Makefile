@@ -25,9 +25,9 @@ bundler:
 bundle2pmvs:
 	@echo -n " Running Bundle2PMVS..."
 	@cd work_dir; ../bin/Bundle2PMVS list.txt bundle/bundle.out >> $(LOGFILE) 2>&1
-	@cp work_dir/pmvs/* work_dir/
-	@sed -i 4d work_dir/prep_pmvs.sh
-	@export BUNDLER_BIN_PATH="../bin"; cd work_dir; sh prep_pmvs.sh >> $(LOGFILE) 2>&1
+	@cd work_dir; sed -i 4d pmvs/prep_pmvs.sh
+	@cd work_dir; sed -i 5d pmvs/prep_pmvs.sh
+	@cd work_dir; export BUNDLER_BIN_PATH="../bin"; sh pmvs/prep_pmvs.sh >> $(LOGFILE) 2>&1
 	@echo " OK"
 	
 cmvs:
