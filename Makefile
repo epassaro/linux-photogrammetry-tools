@@ -1,5 +1,6 @@
 IMG_DIR = examples/kermit
-OUTPUT = work_dir
+RESIZE = False
+MAX_SIZE = 1200
 LOGFILE = log.txt
 
 all:  clean images mesh
@@ -9,9 +10,15 @@ mesh: bundler bundle2pmvs cmvs pmvs
 images:
 	@echo; echo -n " Copying files..."
 	@mkdir -p work_dir
-	@cp $(IMG_DIR)/*.jpg work_dir
+	@cp $(IMG_DIR)/* work_dir
 	@cp utils/bundler.py work_dir
 	@echo " OK"
+ifeq ("$(RESIZE)", "True")
+	@echo -n " Resizing pictures..."
+	@cp utils/resizer.py work_dir
+	@cd work_dir; python resizer.py $(MAX_SIZE)
+	@echo " OK"
+endif
 
 bundler:
 	@echo -n " Extracting focal distances..."

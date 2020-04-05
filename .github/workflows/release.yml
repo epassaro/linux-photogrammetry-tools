@@ -87,6 +87,7 @@ jobs:
           cd ..
           cp ccd_widths.yml lpt-ubuntu-18.04/cfg
           cp bundler.py lpt-ubuntu-18.04/utils
+          cp resizer.py lpt-ubuntu-18.04/utils
           chmod -R u+x lpt-ubuntu-18.04/bin
           cp bundler_sfm/examples/ET/*.jpg lpt-ubuntu-18.04/examples/ET
           cp bundler_sfm/examples/kermit/*.jpg lpt-ubuntu-18.04/examples/kermit
