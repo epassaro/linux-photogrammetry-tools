@@ -1,5 +1,5 @@
 IMG_DIR = examples/kermit
-RESIZE = False
+RESIZE = True
 MAX_SIZE = 1200
 LOGFILE = log.txt
 
