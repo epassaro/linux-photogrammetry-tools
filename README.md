@@ -16,7 +16,7 @@ Get latest build from [here](https://github.com/epassaro/linux-photogrammetry-to
 ## Dependencies
 Probably you have most of these dependencies already installed on your system:
 
-`build-essential` `libc6-i386` `libjpeg62` `liblapack3` `libceres1` `jhead` `python` `python-pil` `python-ruamel.yaml`
+`build-essential` `libjpeg62` `liblapack3` `libceres1` `jhead` `python` `python-pil` `python-ruamel.yaml`
 
 
 ## Run example
