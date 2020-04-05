@@ -27,12 +27,6 @@ jobs:
       - name: clone bundler
         run: git clone https://github.com/snavely/bundler_sfm.git
 
-      - name: get lowe-sift
-        run: |
-          wget http://www.cs.ubc.ca/~lowe/keypoints/siftDemoV4.zip
-          unzip siftDemoV4.zip
-          cp siftDemoV4/sift bundler_sfm/bin
-
       - name: compile bundler
         run: |
           cd bundler_sfm
@@ -42,7 +36,6 @@ jobs:
       - name: remove files
         run: |
           cd bundler_sfm/bin
-          rm sift
           rm zlib1.dll
           rm ToSift.sh
           rm ToSiftList.sh
