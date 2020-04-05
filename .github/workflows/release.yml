@@ -1,16 +1,12 @@
 name: build
 
 on:
-  push:
-    branches: [master]
-
-  pull_request:
-    branches: [master]
+  release:
+    types: [published]
 
 jobs:
   build:
     runs-on: ubuntu-18.04
-    if: "contains(toJSON(github.event.commits.*.message), '[build]')"
 
     steps:
       - uses: actions/checkout@v2
