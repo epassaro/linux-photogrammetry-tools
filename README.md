@@ -5,8 +5,13 @@ A set of photogrammetry tools compiled for Ubuntu 18.04 and ready to use:
 
 - SIFT by [vlfeat.org](https://www.vlfeat.org/)
 - [Bundler](https://github.com/snavely/bundler_sfm) (compiled with Ceres Solver) by Noah Snavely
-- A patched version of `bundler.py` compatible with VLFeat SIFT (based on [Python Photogrammetry Toolbox](https://github.com/steve-vincent/photogrammetry)) and more tweaks
 - [CMVS \& PMVS2](https://github.com/pmoulon/CMVS-PMVS) by Yasutaka Furukawa
+- A patched version of `bundler.py`:
+  - Compatible with VLFeat SIFT (based on [Python Photogrammetry Toolbox](https://github.com/steve-vincent/photogrammetry))
+  - Uses Ceres Solver by default
+  - Reads `CCD_WIDTHS` from a YAML file
+- An image resizer script that keeps EXIF metadata
+- A `Makefile` to run the pipeline steps
 
 > If you want to know more about how this software is packed see [here](https://github.com/epassaro/linux-photogrammetry-tools/blob/master/.github/workflows/release.yml).
 
