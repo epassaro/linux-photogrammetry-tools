@@ -10,7 +10,8 @@ mesh: bundler bundle2pmvs cmvs pmvs
 images:
 	@echo; echo -n " Copying files..."
 	@mkdir -p work_dir
-	@cp $(IMG_DIR)/* work_dir
+	@rsync -a --ignore-missing-args $(IMG_DIR)/*.jpg work_dir
+	@rsync -a --ignore-missing-args $(IMG_DIR)/*.JPG work_dir
 	@cp utils/bundler.py work_dir
 	@echo " OK"
 ifeq ("$(RESIZE)", "True")
