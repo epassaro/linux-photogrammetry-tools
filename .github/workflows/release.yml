@@ -87,5 +87,5 @@ jobs:
         uses: AButler/upload-release-assets@v2.0
         with:
           files: "*.tar.gz"
-          release-tag: "stable"
+          release-tag: "latest"
           repo-token: ${{ secrets.GITHUB_TOKEN }}

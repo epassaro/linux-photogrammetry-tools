@@ -24,7 +24,7 @@ Probably you have most of these dependencies already installed on your system:
 
 
 ## Download
-Get latest build from [here](https://github.com/epassaro/linux-photogrammetry-tools/releases/download/stable/lpt-ubuntu-18.04.tar.gz) and extract it.
+Get latest build from [here](https://github.com/epassaro/linux-photogrammetry-tools/releases/download/latest/lpt-ubuntu-18.04.tar.gz) and extract it.
 
 
 ## Run example
