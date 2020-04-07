@@ -89,3 +89,23 @@ jobs:
           files: "*.tar.gz"
           release-tag: "latest"
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+  test:
+    runs-on: ubuntu-18.04
+    needs: build
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: install dependencies
+        run: sudo apt install build-essential libjpeg62 liblapack3 libceres1 jhead python python-pil python-ruamel.yaml
+
+      - name: download release
+        run: wget https://github.com/epassaro/linux-photogrammetry-tools/releases/download/latest/lpt-ubuntu-18.04.tar.gz
+
+      - name: unzip
+        run: tar -xvf lpt-ubuntu-18.04.tar.gz
+
+      - name: run example
+        run: |
+          cd lpt-ubuntu-18.04
+          make
