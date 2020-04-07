@@ -63,6 +63,7 @@ jobs:
           cp -r bundler_sfm/bin lpt-ubuntu-18.04
           cp Makefile lpt-ubuntu-18.04
           cp LICENSE lpt-ubuntu-18.04
+          cp vlfeat/COPYING lpt-ubuntu-18.04/bin 
 
           cd lpt-ubuntu-18.04
           mkdir lib
