@@ -75,20 +75,13 @@ jobs:
           cd ..
           cp -r cfg lpt-ubuntu-18.04
           cp -r utils lpt-ubuntu-18.04
-          chmod -R u+x lpt-ubuntu-18.04/bin
           cp bundler_sfm/examples/ET/*.jpg lpt-ubuntu-18.04/examples/ET
           cp bundler_sfm/examples/kermit/*.jpg lpt-ubuntu-18.04/examples/kermit
 
-      - name: tar
-        run: |
-          tar -zcvf lpt-ubuntu-18.04.tar.gz lpt-ubuntu-18.04
-
-      - name: release
-        uses: AButler/upload-release-assets@v2.0
+      - uses: actions/upload-artifact@v1
         with:
-          files: "*.tar.gz"
-          release-tag: "latest"
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          name: lpt-ubuntu-18.04
+          path: lpt-ubuntu-18.04
 
   test:
     runs-on: ubuntu-18.04
@@ -99,13 +92,46 @@ jobs:
       - name: install dependencies
         run: sudo apt install build-essential libjpeg62 liblapack3 libceres1 jhead python python-pil python-ruamel.yaml
 
-      - name: download release
-        run: wget https://github.com/epassaro/linux-photogrammetry-tools/releases/download/latest/lpt-ubuntu-18.04.tar.gz
-
-      - name: unzip
-        run: tar -xvf lpt-ubuntu-18.04.tar.gz
+      - uses: actions/download-artifact@v1
+        with:
+          name: lpt-ubuntu-18.04
 
       - name: run example
         run: |
+          chmod -R u+x lpt-ubuntu-18.04/bin
           cd lpt-ubuntu-18.04
           make
+
+      - uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: log.txt
+          path: lpt-ubuntu-18.04/work_dir/log.txt
+
+      - uses: actions/upload-artifact@v1
+        if: success()
+        with:
+          name: option-0000.ply
+          path: lpt-ubuntu-18.04/work_dir/pmvs/models/option-0000.ply      
+
+  release:
+    runs-on: ubuntu-18.04
+    needs: test
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/download-artifact@v1
+        with:
+          name: lpt-ubuntu-18.04
+
+      - name: tar
+        run: |
+          chmod -R u+x lpt-ubuntu-18.04/bin
+          tar -zcvf lpt-ubuntu-18.04.tar.gz lpt-ubuntu-18.04
+
+      - name: release
+        uses: AButler/upload-release-assets@v2.0
+        with:
+          files: "*.tar.gz"
+          release-tag: "latest"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
