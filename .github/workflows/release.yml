@@ -18,10 +18,15 @@ jobs:
       - name: clone vlfeat
         run: git clone https://github.com/vlfeat/vlfeat.git
 
+      - name: patch vlfeat
+        run: |
+          cp src/vlfeat/vl/pgm.patch vlfeat/vl
+          cd vlfeat/vl
+          patch < pgm.patch
+
       - name: compile vlfeat
         run: |
           cd vlfeat
-          sed -i 's/  if(! (max_value >= 65536)) {/  if(! max_value >= 65536) {/' vl/pgm.c
           make
 
       - name: clone bundler

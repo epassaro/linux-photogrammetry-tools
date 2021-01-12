@@ -1,0 +1,11 @@
+--- pgm.c	2021-01-12 01:41:42.640566188 -0300
++++ "pgm copy.c"	2021-01-12 01:43:30.953095701 -0300
+@@ -233,7 +233,7 @@
+     return vl_set_last_error(VL_ERR_PGM_INV_META, "Invalid PGM meta information");
+   }
+ 
+-  if(! (max_value >= 65536)) {
++  if(! max_value >= 65536) {
+     return vl_set_last_error(VL_ERR_PGM_INV_META, "Invalid PGM meta information");
+   }
+ 
