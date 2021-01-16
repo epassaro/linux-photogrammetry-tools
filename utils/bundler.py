@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#! /usr/bin/python3
 # #### BEGIN LICENSE BLOCK ####
 #
 # bundler.py - Python convenience module for running Bundler.
