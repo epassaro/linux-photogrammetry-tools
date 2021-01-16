@@ -17,16 +17,16 @@ images:
 ifeq ("$(RESIZE)", "True")
 	@echo -n " Resizing pictures..."
 	@cp utils/resizer.py work_dir
-	@cd work_dir; python resizer.py $(MAX_SIZE)
+	@cd work_dir; python3 resizer.py $(MAX_SIZE)
 	@echo " OK"
 endif
 
 bundler:
 	@echo -n " Extracting focal distances..."
-	@cd work_dir; python bundler.py --extract-focal
+	@cd work_dir; python3 bundler.py --extract-focal
 	@echo " OK"
 	@echo -n " Running Bundler..."
-	@cd work_dir; python bundler.py --verbose > $(LOGFILE) 2>&1
+	@cd work_dir; python3 bundler.py --verbose > $(LOGFILE) 2>&1
 	@echo " OK"
 
 bundle2pmvs:
