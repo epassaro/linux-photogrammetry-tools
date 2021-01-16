@@ -4,15 +4,16 @@
 A set of photogrammetry tools compiled for Ubuntu 18.04, fully open source and ready to use:
 
 - SIFT* by [vlfeat.org](https://www.vlfeat.org/).
-- [Bundler](https://github.com/snavely/bundler_sfm) (compiled with Ceres Solver) by Noah Snavely.
+- [Bundler](https://github.com/snavely/bundler_sfm) (compiled w/Ceres Solver) by Noah Snavely.
 - [CMVS \& PMVS2](https://github.com/pmoulon/CMVS-PMVS) by Yasutaka Furukawa.
 - A patched version of Isaac Lenton's `bundler.py`:
-  - Compatible with Python 2-3.
+  - Ported to Python 3.
   - Works with VLFeat SIFT (patch based on [Python Photogrammetry Toolbox](https://github.com/steve-vincent/photogrammetry) code).
   - Uses Ceres Solver by default.
   - Reads `CCD_WIDTHS` from a YAML file.
 - An image resizer script that keeps EXIF metadata.
 - A `Makefile` to run the pipeline steps.
+- A Jupyter Notebook for point cloud meshing with [Open3D](https://github.com/intel-isl/Open3D).
 
 > If you want to know more about how this software is packed [see here](https://github.com/epassaro/linux-photogrammetry-tools/blob/master/.github/workflows/release.yml).
 
@@ -20,7 +21,7 @@ A set of photogrammetry tools compiled for Ubuntu 18.04, fully open source and r
 
 
 ## Dependencies
-`build-essential` `libjpeg62` `liblapack3` `libceres1` `jhead` `python` `python-pil` `python-ruamel.yaml`
+`build-essential` `libjpeg62` `liblapack3` `libceres1` `jhead` `python3` `python3-pil` `python3-ruamel.yaml`
 
 
 ## Download
@@ -32,7 +33,6 @@ Open a new terminal, go to the program folder and run `make` to process the Kerm
 
 
 ## Options
-
 You can edit the following parameters at the top of `Makefile`.
 
 - IMG_DIR: *path*. Directory with a collection of images to be processed. Default: `examples/kermit`.
@@ -42,21 +42,31 @@ You can edit the following parameters at the top of `Makefile`.
 
 
 ## Visualize the results & post-processing
-Open the `.ply` file located at `work_dir/pmvs/models/` with [Meshlab](http://www.meshlab.net/) or [CloudCompare](https://www.danielgm.net/cc/). You should visualize the point cloud clearly.
 
-To generate a textured mesh from point cloud with Meshlab, I recommend following the [Shubham Wagh's guide](https://gist.github.com/shubhamwagh/0dc3b8173f662d39d4bf6f53d0f4d66b).
+### Open3D
+To generate a 3D mesh from the point cloud with [Open3D](https://github.com/intel-isl/Open3D) you will need Anaconda or [Miniconda](https://docs.conda.io/en/latest/miniconda.html) installed on your system, and then create a new environment:
+
+```
+$ conda create -n open3d -c open3d-admin -c conda-forge open3d=0.12
+```
+
+Finally, run the notebook `gen_3d_mesh.ipynb` located at the `docs` folder.
+
+
+### Meshlab
+Open the `.ply` file located at `work_dir/pmvs/models/` with [Meshlab](http://www.meshlab.net/). You should visualize the point cloud clearly. To generate a textured mesh from point cloud, I recommend following the [Shubham Wagh's guide](https://gist.github.com/shubhamwagh/0dc3b8173f662d39d4bf6f53d0f4d66b).
 
 
 ## Known issues
-Check the log file inside `work_dir` directory in case of error.
 
 1. `No CCD width available for camera`. 
 
     Only a small number of CCD widths are listed in `cfg/ccd_widths.yml`. 
 
     **Solution:** google your camera specs and add a new entry to the list.
+    
+> If your problem is not listed here please check the log file inside your `work_dir` directory and open a [new issue](https://github.com/epassaro/linux-photogrammetry-tools/issues/new).
 
 
 ## License
-
 Code released under the [GNU GPLv3 License](https://raw.githubusercontent.com/epassaro/linux-photogrammetry-tools/master/LICENSE).
