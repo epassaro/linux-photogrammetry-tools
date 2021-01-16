@@ -1,15 +1,33 @@
-name: build
+name: CI
 
 on:
+  push:
+    branches:
+      - master
+
+  pull_request:
+    branches:
+      - master
+
   release:
-    types: [published]
+    types:
+     - published
 
 jobs:
   build:
     runs-on: ubuntu-18.04
-
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: set variables
+        run: |
+          if [[ ${{ github.event_name }} == 'release' ]]; then
+            echo "DIRNAME=lpt-${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+          else
+            echo "DIRNAME=lpt-dev$(git rev-list HEAD --count)" >> $GITHUB_ENV
+          fi
 
       - name: install build dependencies
         run: |
@@ -64,13 +82,13 @@ jobs:
           cp CMVS-PMVS/program/build/main/pmvs2 bundler_sfm/bin
           cp CMVS-PMVS/program/build/main/genOption bundler_sfm/bin
                   
-          mkdir lpt-ubuntu-18.04
-          cp -r bundler_sfm/bin lpt-ubuntu-18.04
-          cp Makefile lpt-ubuntu-18.04
-          cp LICENSE lpt-ubuntu-18.04
-          cp vlfeat/COPYING lpt-ubuntu-18.04/bin 
+          mkdir ${{ env.DIRNAME }}
+          cp -r bundler_sfm/bin ${{ env.DIRNAME }}
+          cp Makefile ${{ env.DIRNAME }}
+          cp LICENSE ${{ env.DIRNAME }}
+          cp vlfeat/COPYING ${{ env.DIRNAME }}/bin 
 
-          cd lpt-ubuntu-18.04
+          cd ${{ env.DIRNAME }}
           mkdir lib
           mkdir -p examples/ET
           mkdir -p examples/kermit
@@ -78,71 +96,81 @@ jobs:
           mv bin/libvl.so lib
 
           cd ..
-          cp -r cfg lpt-ubuntu-18.04
-          cp -r docs lpt-ubuntu-18.04
-          cp -r utils lpt-ubuntu-18.04
-          cp bundler_sfm/examples/ET/*.jpg lpt-ubuntu-18.04/examples/ET
-          cp bundler_sfm/examples/kermit/*.jpg lpt-ubuntu-18.04/examples/kermit
+          cp -r cfg ${{ env.DIRNAME }}
+          cp -r docs ${{ env.DIRNAME }}
+          cp -r utils ${{ env.DIRNAME }}
+          cp bundler_sfm/examples/ET/*.jpg ${{ env.DIRNAME }}/examples/ET
+          cp bundler_sfm/examples/kermit/*.jpg ${{ env.DIRNAME }}/examples/kermit
 
       - uses: actions/upload-artifact@v1
         with:
-          name: lpt-ubuntu-18.04
-          path: lpt-ubuntu-18.04
+          name: ${{ env.DIRNAME }}
+          path: ${{ env.DIRNAME }}
 
   test:
     runs-on: ubuntu-18.04
     needs: build
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0      
+
+      - name: set variables
+        run: |
+          if [[ ${{ github.event_name }} == 'release' ]]; then
+            echo "DIRNAME=lpt-${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+          else
+            echo "DIRNAME=lpt-dev$(git rev-list HEAD --count)" >> $GITHUB_ENV
+          fi
 
       - name: install runtime dependencies
         run: sudo apt install build-essential libjpeg62 liblapack3 libceres1 jhead python3 python3-pil python3-ruamel.yaml
 
       - uses: actions/download-artifact@v1
         with:
-          name: lpt-ubuntu-18.04
+          name: ${{ env.DIRNAME }}
 
       - name: run example
         run: |
-          chmod -R u+x lpt-ubuntu-18.04/bin
-          cd lpt-ubuntu-18.04
+          chmod -R u+x ${{ env.DIRNAME }}/bin
+          cd ${{ env.DIRNAME }}
           make
 
-      - uses: actions/upload-artifact@v1
-        if: failure()
-        with:
-          name: log.txt
-          path: lpt-ubuntu-18.04/work_dir/log.txt
-
-      - uses: actions/upload-artifact@v1
-        if: success()
-        with:
-          name: option-0000.ply
-          path: lpt-ubuntu-18.04/work_dir/pmvs/models/option-0000.ply      
-
   release:
+    if: ${{ github.event_name == 'release' }}
     runs-on: ubuntu-18.04
     needs: test
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: set variables
+        run: |
+          if [[ ${{ github.event_name }} == 'release' ]]; then
+            echo "DIRNAME=lpt-${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+          else
+            echo "DIRNAME=lpt-dev$(git rev-list HEAD --count)" >> $GITHUB_ENV
+          fi
 
       - uses: actions/download-artifact@v1
         with:
-          name: lpt-ubuntu-18.04
+          name: ${{ env.DIRNAME }}
 
       - name: tar
         run: |
-          chmod -R u+x lpt-ubuntu-18.04/bin
-          tar -zcvf lpt-ubuntu-18.04.tar.gz lpt-ubuntu-18.04
+          chmod -R u+x ${{ env.DIRNAME }}/bin
+          tar -zcvf ${{ env.DIRNAME }}.tar.gz ${{ env.DIRNAME }}
 
       - name: release
         uses: AButler/upload-release-assets@v2.0
         with:
           files: "*.tar.gz"
-          release-tag: "latest"
+          release-tag: ${{ github.event.release.tag_name }}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
-  docker:
+  docker-push:
+    if: ${{ github.event_name == 'release' }}
     runs-on: ubuntu-18.04
     needs: release
     steps:
@@ -164,6 +192,8 @@ jobs:
         with:
           push: true
           tags: epassaro/linux-photogrammetry-tools:latest
+          build-args: |
+            VERSION=${{ github.event.release.tag_name }}
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
