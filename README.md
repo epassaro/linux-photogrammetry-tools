@@ -1,7 +1,5 @@
 # linux-photogrammetry-tools
-![build](https://github.com/epassaro/linux-photogrammetry-tools/workflows/build/badge.svg)
-
-A set of photogrammetry tools compiled for Ubuntu 18.04, fully open source and ready to use:
+A set of photogrammetry tools compiled for Ubuntu and containerized, fully open source and ready to use:
 
 - SIFT* by [vlfeat.org](https://www.vlfeat.org/).
 - [Bundler](https://github.com/snavely/bundler_sfm) (compiled w/Ceres Solver) by Noah Snavely.
@@ -20,20 +18,31 @@ A set of photogrammetry tools compiled for Ubuntu 18.04, fully open source and r
 > \* SIFT patent [expired on March 2020](https://patents.google.com/patent/US6711293B1/en).
 
 
-## Dependencies
-`build-essential` `libjpeg62` `liblapack3` `libceres1` `jhead` `python3` `python3-pil` `python3-ruamel.yaml`
+## Installation
 
+### Docker
+Get the latest image:
 
-## Download
-Get latest build [from here](https://github.com/epassaro/linux-photogrammetry-tools/releases/download/latest/lpt-ubuntu-18.04.tar.gz) and extract it.
+`docker pull epassaro/linux-photogrammetry-tools:latest`
 
+### Ubuntu 18.04
+1. Get latest build from [releases section](https://github.com/epassaro/linux-photogrammetry-tools/releases) and extract it. 
+2. Install the following dependencies via `apt`:
+    
+    `build-essential` `libjpeg62` `liblapack3` `libceres1` `jhead` `python3` `python3-pil` `python3-ruamel.yaml`
 
-## Run example
-Open a new terminal, go to the program folder and run `make` to process the Kermit dataset.
+## Usage
+
+### Docker
+Usage via container is described in [DOCKER.md](https://github.com/epassaro/linux-photogrammetry-tools/blob/master/DOCKER.md).
+
+### Ubuntu
+To process the example dataset open a new terminal, go to the program folder and run `make`. 
 
 
 ## Options
-You can edit the following parameters at the top of `Makefile`.
+
+The following options can be passed to `make` in the command line:
 
 - IMG_DIR: *path*. Directory with a collection of images to be processed. Default: `examples/kermit`.
 - RESIZE: *bool*. Resize pictures before processing. Default: `True`.
@@ -41,7 +50,7 @@ You can edit the following parameters at the top of `Makefile`.
 - LOGFILE: *path*. Default: `log.txt`.
 
 
-## Visualize the results & post-processing
+## Visualize results & post-processing
 
 ### Open3D
 To generate a 3D mesh from the point cloud with [Open3D](https://github.com/intel-isl/Open3D) you will need Anaconda or [Miniconda](https://docs.conda.io/en/latest/miniconda.html) installed on your system, and then create a new environment:
