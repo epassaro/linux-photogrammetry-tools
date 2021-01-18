@@ -3,9 +3,9 @@ RESIZE = True
 MAX_SIZE = 1200
 LOGFILE = log.txt
 
-all:  clean images mesh
+all:  clean images cloud output
 
-mesh: bundler bundle2pmvs cmvs pmvs
+cloud: bundler bundle2pmvs cmvs pmvs
 
 images:
 	@echo; echo -n " Copying files..."
@@ -46,6 +46,12 @@ cmvs:
 pmvs:
 	@echo -n " Running PMVS..."
 	@cd work_dir; ../bin/pmvs2 ./pmvs/ option-0000 >> $(LOGFILE) 2>&1
+	@echo " OK"
+
+output:
+	@echo -n " Copying results..."
+	@mkdir -p $(IMG_DIR)/output
+	@cp work_dir/pmvs/models/*.ply $(IMG_DIR)/output
 	@echo " OK"
 	@echo; echo "Finished."
 
