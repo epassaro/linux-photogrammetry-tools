@@ -52,6 +52,8 @@ The following options can be passed to `make` in the command line:
 
 ## Visualize results & post-processing
 
+Results are stored under `<IMG_DIR>/output` folder.
+
 ### Open3D
 To generate a 3D mesh from the point cloud with [Open3D](https://github.com/intel-isl/Open3D) you will need Anaconda or [Miniconda](https://docs.conda.io/en/latest/miniconda.html) installed on your system, and then create a new environment:
 
