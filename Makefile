@@ -40,13 +40,13 @@ bundle2pmvs:
 	
 cmvs:
 	@echo -n " Running CMVS..."
-	@cd work_dir; ../bin/cmvs ./pmvs >> $(LOGFILE) 2>&1
-	@cd work_dir; ../bin/genOption ./pmvs >> $(LOGFILE) 2>&1
+	@cd work_dir; ../bin/cmvs ./pmvs/ >> $(LOGFILE) 2>&1
+	@cd work_dir; ../bin/genOption ./pmvs/ >> $(LOGFILE) 2>&1
 	@echo " OK"
 
 pmvs:
 	@echo -n " Running PMVS..."
-	@cd work_dir; ../bin/pmvs2 ./pmvs option-0000 >> $(LOGFILE) 2>&1
+	@cd work_dir; ../bin/pmvs2 ./pmvs/ option-0000 >> $(LOGFILE) 2>&1
 	@echo " OK"
 
 output:
