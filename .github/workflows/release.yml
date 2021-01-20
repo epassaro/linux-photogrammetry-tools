@@ -31,6 +31,7 @@ jobs:
 
       - name: install build dependencies
         run: |
+          sudo apt update
           sudo apt install build-essential git gfortran liblapack-dev libgsl-dev minpack-dev f2c jhead zlib1g-dev libjpeg62-dev libceres-dev cmake
 
       - name: clone vlfeat
@@ -124,7 +125,9 @@ jobs:
           fi
 
       - name: install runtime dependencies
-        run: sudo apt install build-essential libjpeg62 liblapack3 libceres1 jhead python3 python3-pil python3-ruamel.yaml
+        run: |
+          sudo apt update
+          sudo apt install build-essential libjpeg62 liblapack3 libceres1 jhead python3 python3-pil python3-ruamel.yaml
 
       - uses: actions/download-artifact@v1
         with:
