@@ -52,6 +52,9 @@ output:
 	@echo -n " Copying results..."
 	@mkdir -p $(IMG_DIR)/output
 	@cp work_dir/pmvs/models/*.ply $(IMG_DIR)/output
+ifdef $(USERGROUP)
+	@chown $(USERGROUP) $(IMG_DIR)/output/*
+endif
 	@echo " OK"
 	@echo; echo "Finished."
 
