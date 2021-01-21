@@ -53,11 +53,10 @@ output:
 	@echo -n " Copying results..."
 	@mkdir -p $(IMG_DIR)/output
 	@cp work_dir/pmvs/models/*.ply $(IMG_DIR)/output
-	@echo " OK"
 ifdef $(USERGROUP)
+	@echo " OK"
 	@echo -n " Setting file ownership..."
 	@chown $(USERGROUP) -R $(IMG_DIR)/output
-	@echo " OK"
 endif
 	@echo " OK"
 	@echo; echo "Finished."
