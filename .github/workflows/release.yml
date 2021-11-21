@@ -70,7 +70,7 @@ jobs:
         run: |
           cd CMVS-PMVS/program
           mkdir build; cd build
-          cmake -g "CodeBlocks - Unix Makefiles" ..
+          cmake -G "CodeBlocks - Unix Makefiles" ..
           make
 
       - name: prepare files
