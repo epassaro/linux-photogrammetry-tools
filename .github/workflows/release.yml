@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - master
+    paths-ignore:
+      - '**.md'
 
   release:
     types:
@@ -33,7 +35,11 @@ jobs:
                             libceres-dev cmake
 
       - name: clone vlfeat
-        run: git clone https://github.com/vlfeat/vlfeat.git
+        run: |
+          git clone https://github.com/vlfeat/vlfeat.git
+          cd vlfeat
+          git checkout 1b9075f
+          cd -
 
       - name: patch vlfeat
         run: |
@@ -47,7 +53,11 @@ jobs:
           make
 
       - name: clone bundler
-        run: git clone https://github.com/snavely/bundler_sfm.git
+        run: |
+          git clone https://github.com/snavely/bundler_sfm.git
+          cd bundler_sfm
+          git checkout a35a8f5
+          cd -
 
       - name: compile bundler
         run: |
@@ -64,7 +74,11 @@ jobs:
           rm extract_focal.pl
 
       - name: clone cmvs-pmvs
-        run: git clone https://github.com/pmoulon/CMVS-PMVS.git
+        run: |
+          git clone https://github.com/pmoulon/CMVS-PMVS.git
+          cd CMVS-PMVS
+          git checkout 101c2ee
+          cd -
 
       - name: compile cmvs-pmvs
         run: |
