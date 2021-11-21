@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM alicevision/popsift:version-0.9-cuda10.2-ubuntu18.04
 
 LABEL MAINTAINER="epassaro"
 
