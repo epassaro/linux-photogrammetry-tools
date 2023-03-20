@@ -2,7 +2,6 @@ IMG_DIR = examples/kermit
 RESIZE = True
 MAX_SIZE = 1200
 LOGFILE = log.txt
-OWNER = $(USER)
 
 all:  clean images cloud output
 
@@ -53,9 +52,6 @@ output:
 	@echo -n " Copying results..."
 	@mkdir -p $(IMG_DIR)/output
 	@cp work_dir/pmvs/models/*.ply $(IMG_DIR)/output
-	@echo " OK"
-	@echo -n " Setting folder ownership..."
-	@chown -R $(OWNER) $(IMG_DIR)/output
 	@echo " OK"
 	@echo; echo "Finished."
 
