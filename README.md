@@ -11,9 +11,10 @@ A set of photogrammetry tools compiled for Ubuntu and containerized, fully open 
   - Reads `CCD_WIDTHS` from a YAML file.
 - An image resizer script that keeps EXIF metadata.
 - A `Makefile` to run the pipeline steps.
-- A Jupyter Notebook for point cloud meshing with [Open3D](https://github.com/intel-isl/Open3D).
+- A [Jupyter Notebook](https://github.com/epassaro/linux-photogrammetry-tools/blob/master/docs/gen_3d_mesh.ipynb) for point cloud meshing with [Open3D](https://github.com/intel-isl/Open3D).
+- **NEW! (March 2023):** A [Jupyter Notebook](https://github.com/epassaro/linux-photogrammetry-tools/blob/master/docs/meshroom.ipynb) to run [AliceVision's Meshroom](https://github.com/alicevision/Meshroom) on Google Colaboratory (or locally with a CUDA compatible GPU). This is a complete photogrammetry pipeline and works independently of the software listed above.
 
-> If you want to know more about how this software is packed [see here](https://github.com/epassaro/linux-photogrammetry-tools/blob/master/.github/workflows/release.yml).
+> If you want to know more about how this software is packaged [see here](https://github.com/epassaro/linux-photogrammetry-tools/blob/master/.github/workflows/release.yml).
 
 > \* SIFT patent [expired on March 2020](https://patents.google.com/patent/US6711293B1/en).
 
