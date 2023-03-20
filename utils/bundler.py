@@ -302,7 +302,7 @@ def bundler(image_list=None, options_file=None, shell=False, *args, **kwargs):
 
     image_list_file = ""
     if type(image_list) == dict:
-        with tempfile.NamedTemporaryFile(delete=False, mode='wt') as fp:
+        with open("image_list_file.txt", "w") as fp:
             for image,value in image_list.items():
                 if value == None: fp.write(image + '\n')
                 else: fp.write(' '.join([image, '0', str(value), '\n']))
@@ -319,19 +319,18 @@ def bundler(image_list=None, options_file=None, shell=False, *args, **kwargs):
     else:
         env['LD_LIBRARY_PATH'] = LIB_PATH
 
+    print(f"export LD_LIBRARY_PATH=" + env["LD_LIBRARY_PATH"])
     try:    os.mkdir("bundle")
     except: pass
 
-    with open(os.path.join("bundle", "out"), 'wt') as fp_out:
+    with open(os.path.join("bundle", "err_out"), 'wt') as fp_out:
         if options_file is not None:
-            subprocess.call([BIN_BUNDLER, image_list_file, "--options_file",
-                options_file], shell=shell, env=env, stdout=fp_out)
+            p_args = [BIN_BUNDLER, image_list_file, "--options_file", options_file]
         else:
-            subprocess.call([BIN_BUNDLER, image_list_file] + str_args,
-                shell=shell, env=env, stdout=fp_out)
+            p_args = [BIN_BUNDLER, image_list_file] + str_args
 
-    if type(image_list) == dict:
-        os.remove(image_list_file)
+        print("executing " + ' '.join(p_args))
+        subprocess.call(p_args, shell=shell, env=env, stdout=fp_out, stderr=fp_out)
 
 def run_bundler(images=[], verbose=False, parallel=True):
     """Prepare images and run bundler with default options."""
