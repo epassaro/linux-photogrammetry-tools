@@ -1,3 +1,14 @@
+> ⚠️ This repository has been archived, mainly because it relied on GitHub Actions using a deprecated Ubuntu 18.04 image
+> to build and distribute a Docker image with preinstalled software. Additionally, this project was mostly educational
+> and not intended for production use.
+>
+> I’ve learned a lot about photogrammetry and continuous integration since I started writing this pipeline in 2020, during
+> the COVID pandemic. However, today we have better and more modern tools for this kind of task (see my GitHub profile,
+> for example).
+>
+> If you’re still interested in this particular pipeline, you can check out .github/workflows/release.yml
+> as a reference. Also, there’s a chance I might resurrect this pipeline on GitLab if I find the time.
+
 # linux-photogrammetry-tools
 A set of open-source photogrammetry tools to run with Docker:
 
